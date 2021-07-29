@@ -1,0 +1,80 @@
+
+<script src="https://kit.fontawesome.com/f03fd448b3.js" crossorigin="anonymous"></script>
+<p id="notice"></p>
+<main>
+  <div class="container px-5 px-sm-0">
+    <div class="row">
+      <div class="col-md-3">
+        <%= render 'users/info', user: @book_detail.user %>
+        <%= render 'books/new', book: @book %>
+      </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table">
+        <tbody>
+          <tr>
+           <td>
+             <%= attachment_image_tag @book_detail.user, :profile_image,fallback: "no_image.jpg", size:'40x40' %><br>
+             <%= link_to @book_detail.user.name, user_path(@book_detail.user.id) %>
+             </td>
+           <td><%= link_to @book_detail.title, book_path %></td>
+           <td><%= @book_detail.body %></td>
+
+          <!--いいね機能-->
+          <td>
+            <div id="favorites_buttons_<%= @book_detail.id %>">
+             <%= render "favorites/favorite" , book: @book_detail %>
+            </div>
+          </td>
+          <td>
+            <p>コメント数：<%= @book_detail.book_comments.count %></p>
+          </td>
+          
+          <!--星レビュー-->
+          <td>
+            <div id="rate_<%= @book.id %>"></div>
+            <script>
+              $('#rate_<%= @book.id %>').raty({
+                size: 20,
+                starOff:  '<%= asset_path('star-off.png') %>',
+                starOn : '<%= asset_path('star-on.png') %>',
+                starHalf: '<%= asset_path('star-half.png') %>',
+                half: true,
+                readOnly: true,
+                score: <%= @book.rate %>,
+              });
+            </script>
+          </td>
+           <td>
+             <% if @book_detail.user == current_user %>
+              <%= link_to "Edit", edit_book_path(@book_detail), class: "btn btn-sm btn-secondary bg-success text-white"%>
+             <% end %>
+          </td>
+          <td>
+              <% if @book_detail.user == current_user %>
+                <%= link_to "Destroy", book_path(@book_detail), method: :delete,class: "btn btn-sm btn-secondary bg-danger text-white" ,"data-confirm" => "本当に削除しますか？"%>
+              <% end %>
+          </td>
+        </tr>
+
+          <!--コメント機能-->
+          <tbody>
+          <tr class = "CommentsArea">
+             <%= render "book_comments/comment", book_detail: @book_detail, book_comment: @book_comment %>
+          </tr>
+          <tr>
+            <td class = "InputComment">
+              <%= form_with(model:[@book_detail, @book_comment], remote: true) do |f| %>
+                <div class="form-group">
+                  <%=f.text_area:comment,rows:"5" ,class:"form-control" %>
+                </div>
+                <%= f.submit "送信" %>
+              <% end %>
+            </td>
+          </tr>
+          </tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
