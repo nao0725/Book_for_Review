@@ -19,6 +19,7 @@ class BooksController < ApplicationController
    @books = Book.all.order(params[:sort])
    @user = current_user
    @book = Book.new
+   @category = @book.category_id
   end
 
   def show
@@ -55,7 +56,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :rate)
+    params.require(:book).permit(:title, :body, :rate, :category)
   end
 
   def correct_user
