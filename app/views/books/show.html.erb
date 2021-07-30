@@ -32,16 +32,16 @@
           
           <!--星レビュー-->
           <td>
-            <div id="rate_<%= @book.id %>"></div>
+            <div id="rate_<%= @book_detail.id %>"></div>
             <script>
-              $('#rate_<%= @book.id %>').raty({
+              $('#rate_<%= @book_detail.id %>').raty({
                 size: 20,
                 starOff:  '<%= asset_path('star-off.png') %>',
                 starOn : '<%= asset_path('star-on.png') %>',
                 starHalf: '<%= asset_path('star-half.png') %>',
                 half: true,
                 readOnly: true,
-                score: <%= @book.rate %>,
+                score: <%= @book_detail.rate %>,
               });
             </script>
           </td>
