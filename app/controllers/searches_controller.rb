@@ -26,13 +26,13 @@ class SearchesController < ApplicationController
       elsif model == "book" #選択したモデルがBookの場合
       
         if method == "perfect" #完全一致なら
-         Book.where(title: content)
+         Book.where(title: content) or Book.where(body: content) or Book.where(category: content)
         elsif method == "forward"  #前方一致なら
-          Book.where("title LIKE?","#{content}%")
+          Book.where("category LIKE?","#{content}%")
         elsif method == "backward" #後方一致なら
-          Book.where("title LIKE?","%#{content}")
+          Book.where("category LIKE?","%#{content}")
         elsif method == "partial" #部分一致なら
-          Book.where("title LIKE ?", "%"+content+"%")
+          Book.where("category LIKE ?", "%"+content+"%")
         else 
           Book.all
         end
@@ -41,3 +41,6 @@ class SearchesController < ApplicationController
     end
       
 end
+
+
+適切なオブジェクト名.where(['検索したいカラム名 ? OR 検索したいカラム名 LIKE ? OR 検索したいカラム名 LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%"])
