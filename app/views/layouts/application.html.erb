@@ -24,7 +24,8 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               
-              <%= render "searches/searchform" %> <!--検索-->
+            <!--検索-->
+            <%= form_with url: :search_path, method: :get, local%>
               
             <div class="navbar-collapse collapse show" id="navbarNavDropdown" style="">
               <ul class="navbar-nav ml-auto">
