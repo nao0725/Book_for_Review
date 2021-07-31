@@ -25,7 +25,10 @@
               </button>
               
             <!--検索-->
-            <%= form_with url: :search_path, method: :get, local%>
+            <%= form_with url: search_path, method: :get, local: :true do |f| %>
+              <%= f.text_field :keyword %>
+              <%= f.submit "Search", class: "btn btn-primary" %>
+            <% end %>
               
             <div class="navbar-collapse collapse show" id="navbarNavDropdown" style="">
               <ul class="navbar-nav ml-auto">
