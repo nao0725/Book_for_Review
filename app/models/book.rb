@@ -9,8 +9,8 @@ class Book < ApplicationRecord
     favorites.where(user_id: user.id).exists?
   end
   
-  def Book.search(search_word)
-    Book.where("category LIKE ?", "#{search_word}")
+ def self.search(search_word)
+    Book.where('title LIKE(?) OR body LIKE(?) OR category LIKE(?)', "%#{search_word}%", "%#{search_word}%", "%#{search_word}%")
   end
 
   validates :title, presence: true
